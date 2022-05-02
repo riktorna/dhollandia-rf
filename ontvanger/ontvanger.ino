@@ -3,6 +3,9 @@
 
 #define UP 7
 #define DOWN 6
+#define UPLED A1
+#define DOWNLED A2
+#define ERRLED A0
 #define VOERTUIG 125
 
 const static int RADIO_ID = 0;
@@ -64,6 +67,8 @@ void setup() {
   }
   pinMode(UP, OUTPUT);
   pinMode(DOWN, OUTPUT);
+  pinMode(UPLED, OUTPUT);
+  pinMode(DOWNLED, OUTPUT);
 }
 
 ISR(TIMER1_COMPA_vect) {
@@ -82,6 +87,7 @@ void loop() {
 
   if (CODE == codeping.omhoog && (BUSY == 0 || BUSY == 1)) {
     digitalWrite(UP, HIGH);
+    digitalWrite(UPLED, HIGH);
     digitalWrite(DOWN, LOW);
     RECIVETIME = millis();
     RECIVE = millis();
@@ -90,6 +96,7 @@ void loop() {
   }
   else if (CODE == codeping.omlaag && (BUSY == 0 || BUSY == 2)) {
     digitalWrite(DOWN, HIGH);
+    digitalWrite(DOWNLED, HIGH);
     digitalWrite(UP, LOW);
     RECIVETIME = millis();
     RECIVE = millis();
@@ -103,6 +110,7 @@ void loop() {
   if (CHECKTIME) {
     if (BUSY != 0 && (millis() - RECIVETIME) >= 300) {
       done();
+      Serial.print("done");
     }
 
     if ((millis() - RECIVE) >= 60000) {
@@ -120,6 +128,8 @@ void loop() {
 void done() {
   digitalWrite(UP, LOW);
   digitalWrite(DOWN, LOW);
+  digitalWrite(UPLED, LOW);
+  digitalWrite(DOWNLED, LOW);
   CODE = 000;
   BUSY = false;
 }
