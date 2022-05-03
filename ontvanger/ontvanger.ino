@@ -81,7 +81,7 @@ ISR(TIMER1_COMPA_vect) {
 
 void loop() {
   if (!verbonden) {
-    digitalWrite(ERRLED, HIGH);
+    digitalWrite(ERRLED, HIGH); // als de vebinding is verloren gaar de gele led aan en probert hij te herverbinden
     /* vindconectie();*/
   }
 
@@ -112,7 +112,7 @@ void loop() {
   }
 
   if (CHECKTIME) {
-    if (BUSY != 0 && (millis() - RECIVETIME) >= 300) {//kan alleen aan als er niets andes aanstaat en z'n code wordt verzonden
+    if (BUSY != 0 && (millis() - RECIVETIME) >= 300) { //elke halve seconde wordt alles uitgezet als er ondertussen niet is ontvangen.
       done();
       Serial.print("done");
     }
@@ -129,7 +129,7 @@ void loop() {
   }
 }
 
-void done() {
+void done() {         //alles uit
   digitalWrite(UP, LOW);
   digitalWrite(DOWN, LOW);
   digitalWrite(UPLED, LOW);

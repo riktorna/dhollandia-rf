@@ -53,17 +53,17 @@ void setup() {
   pinMode(LATCH, INPUT_PULLUP);
 
   drawscreen(1);
-  tone(BEEP, 500, 250);
+  tone(BEEP, 500, 250); // laat horen dat de zender aan gaat
   delay(500);
   tone(BEEP, 500, 250);
   delay(500);
 
-  do {
+  do {                 // teken het handleidingsscherm
     drawscreen(2);
   } while (digitalRead(UP));
 
   zoekontvanger(125);
-  tone(BEEP, 500, 250);
+  tone(BEEP, 500, 250); // laat horen dat de zender verbonden is
   delay(500);
   tone(BEEP, 500, 250);
 }
@@ -77,7 +77,7 @@ void loop() {
       if ((millis() - lost) >= 60000) {
         zoekontvanger(125);
       }
-  } else */if (!digitalRead(UP)) {
+  } else */if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
     if (modus == true) {
       CODE = codeping.omhoog;
       drawscreen(5);
@@ -87,7 +87,7 @@ void loop() {
     }
     sendcode();
 
-  } else if (!digitalRead(DOWN)) {
+  } else if (!digitalRead(DOWN)) {//als er op de rode knop wordt gedrukt, ga dan omlaag (kantelen)
     if (modus == true) {
       CODE = codeping.omlaag;
       drawscreen(6);
@@ -97,9 +97,9 @@ void loop() {
     }
     sendcode();
 
-  } else {
-    modus = digitalRead(LATCH);
-    CODE = 000;
+  } else {                        // als er niets gebeurd;
+    modus = digitalRead(LATCH);   // zet dan de modus goed
+    CODE = 000;                   // en stuur een lege code zodat de ontvanger weet dat je er nog bent
     sendcode();
     drawscreen(4);
   }
@@ -108,7 +108,7 @@ void loop() {
 }
 
 void sendcode() {
-  if (_radio.send(DESTINATION_RADIO_ID, &CODE, sizeof(CODE))) // 'send' puts the radio into Tx mode.
+  if (_radio.send(DESTINATION_RADIO_ID, &CODE, sizeof(CODE))) // 'send' puts the radio into Tx mode and sends the code
   {
     Serial.println("...Success");
    /* if (fails >= 0) {
