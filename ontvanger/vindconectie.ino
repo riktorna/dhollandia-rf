@@ -37,6 +37,7 @@ void vindconectie() {
       verbonden = true;
       RECIVE = millis();
       Serial.println("verbonden");
+      digitalWrite(ERRLED, LOW);
     }
   }
 }
