@@ -6,6 +6,7 @@
 #define UP 5
 #define DOWN 6
 #define LATCH 2
+#define BEEP 3
 
 int CODE = 000;
 
@@ -52,24 +53,31 @@ void setup() {
   pinMode(LATCH, INPUT_PULLUP);
 
   drawscreen(1);
-  delay(1000);
+  tone(BEEP, 500, 250);
+  delay(500);
+  tone(BEEP, 500, 250);
+  delay(500);
 
   do {
     drawscreen(2);
   } while (digitalRead(UP));
 
-   zoekontvanger(125);
+  zoekontvanger(125);
+  tone(BEEP, 500, 250);
+  delay(500);
+  tone(BEEP, 500, 250);
 }
 
 void loop() {
 
-  if (fails >= 10) {/*
-    drawscreen(9);
-     sendcode();
-    if ((millis() - lost) >= 60000) {
-      zoekontvanger(125);
-    }*/
-  } else if (!digitalRead(UP)) {
+  /*if (fails >= 10) {
+    
+      drawscreen(9);
+       sendcode();
+      if ((millis() - lost) >= 60000) {
+        zoekontvanger(125);
+      }
+  } else */if (!digitalRead(UP)) {
     if (modus == true) {
       CODE = codeping.omhoog;
       drawscreen(5);
@@ -103,15 +111,15 @@ void sendcode() {
   if (_radio.send(DESTINATION_RADIO_ID, &CODE, sizeof(CODE))) // 'send' puts the radio into Tx mode.
   {
     Serial.println("...Success");
-    if (fails >= 0) {
-      fails = fails - 1;
-    }
+   /* if (fails >= 0) {
+      fails = fails--;
+    }*/
   }
   else
   {
     Serial.println("...Failed");
-    fails = fails + 1;
-    lost = millis();
+   /* fails = fails++;
+    lost = millis();*/
   }
   Serial.println(CODE);
 }
