@@ -44,7 +44,11 @@ const static uint8_t PIN_RADIO_CSN = 10;
 NRFLite _radio;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600);  
+  pinMode(UP, OUTPUT);
+  pinMode(DOWN, OUTPUT);
+  pinMode(UPLED, OUTPUT);
+  pinMode(DOWNLED, OUTPUT);
   cli();                      //stop interrupts for till we make the settings
   /*1. First we reset the control register to amke sure we start with everything disabled.*/
   TCCR1A = 0;                 // Reset entire TCCR1A to 0
@@ -65,10 +69,7 @@ void setup() {
     Serial.println("Cannot communicate with radio");
     while (1); // Wait here forever.
   }
-  pinMode(UP, OUTPUT);
-  pinMode(DOWN, OUTPUT);
-  pinMode(UPLED, OUTPUT);
-  pinMode(DOWNLED, OUTPUT);
+
 }
 
 ISR(TIMER1_COMPA_vect) {
@@ -77,9 +78,9 @@ ISR(TIMER1_COMPA_vect) {
 }
 
 void loop() {
-  if (!verbonden) {
+ /* if (!verbonden) {
     vindconectie();
-  }
+  }*/
 
   while (_radio.hasData()) {
     _radio.readData(&CODE);
@@ -113,9 +114,9 @@ void loop() {
       Serial.print("done");
     }
 
-    if ((millis() - RECIVE) >= 60000) {
+   /* if ((millis() - RECIVE) >= 60000) {
       verbonden = false;
-    }
+    }*/
 
     CHECKTIME = false;
     Serial.print("RECIVETIME: ");
@@ -131,5 +132,5 @@ void done() {
   digitalWrite(UPLED, LOW);
   digitalWrite(DOWNLED, LOW);
   CODE = 000;
-  BUSY = false;
+  BUSY = 0;
 }
