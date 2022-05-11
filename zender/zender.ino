@@ -51,33 +51,29 @@ void setup() {
   pinMode(UP, INPUT_PULLUP);
   pinMode(DOWN, INPUT_PULLUP);
   pinMode(LATCH, INPUT_PULLUP);
+  pinMode(BEEP, OUTPUT);
 
   drawscreen(1);
-  tone(BEEP, 500, 250); // laat horen dat de zender aan gaat
-  delay(500);
-  tone(BEEP, 500, 250);
-  delay(500);
+  beep();
 
   do {                 // teken het handleidingsscherm
     drawscreen(2);
   } while (digitalRead(UP));
 
   zoekontvanger(125);
-  tone(BEEP, 500, 250); // laat horen dat de zender verbonden is
-  delay(500);
-  tone(BEEP, 500, 250);
+  beep();
 }
 
 void loop() {
 
   /*if (fails >= 10) {
-    
+
       drawscreen(9);
        sendcode();
       if ((millis() - lost) >= 60000) {
         zoekontvanger(125);
       }
-  } else */if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
+    } else */if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
     if (modus == true) {
       CODE = codeping.omhoog;
       drawscreen(5);
@@ -104,22 +100,5 @@ void loop() {
     drawscreen(4);
   }
   delay(50);
-  Serial.println(CODE);
-}
-
-void sendcode() {
-  if (_radio.send(DESTINATION_RADIO_ID, &CODE, sizeof(CODE))) // 'send' puts the radio into Tx mode and sends the code
-  {
-    Serial.println("...Success");
-   /* if (fails >= 0) {
-      fails = fails--;
-    }*/
-  }
-  else
-  {
-    Serial.println("...Failed");
-   /* fails = fails++;
-    lost = millis();*/
-  }
   Serial.println(CODE);
 }
