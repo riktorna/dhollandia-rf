@@ -65,7 +65,7 @@ void setup() {
   OCR1A = 62500;             //Finally we set compare register A to this value
   sei();                     //Enable back the interrupts
 
-  if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN, NRFLite::BITRATE1MBPS, 125))
+  if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN, NRFLite::BITRATE250KBPS, 125))
   {
     Serial.println("Cannot communicate with radio");
     while (1); // Wait here forever.

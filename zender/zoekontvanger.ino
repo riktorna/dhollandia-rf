@@ -1,6 +1,6 @@
 void zoekontvanger(byte voertuig) {
 
-  if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN, NRFLite::BITRATE1MBPS, voertuig))
+  if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN, NRFLite::BITRATE250KBPS, voertuig))
   {
     Serial.println("Cannot communicate with radio");
     while (1); // Wait here forever.
