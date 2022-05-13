@@ -64,7 +64,7 @@ void setup() {
   TIMSK1 |= B00000010;        //Set OCIE1A to 1 so we enable compare match A
 
   /*4. Set the value of register A to 31250*/
-  OCR1A = 62500;             //Finally we set compare register A to this value
+  OCR1A = 35000;             //Finally we set compare register A to this value
   sei();                     //Enable back the interrupts
 
   if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN, NRFLite::BITRATE250KBPS, 125))
