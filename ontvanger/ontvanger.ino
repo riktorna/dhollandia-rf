@@ -46,7 +46,9 @@ NRFLite _radio;
 void setup() {
   Serial.begin(9600);
   pinMode(UP, OUTPUT);
+  digitalWrite(UP, HIGH);
   pinMode(DOWN, OUTPUT);
+  digitalWrite(DOWN, HIGH);
   pinMode(UPLED, OUTPUT);
   pinMode(DOWNLED, OUTPUT);
   pinMode(ERRLED, OUTPUT);
@@ -90,18 +92,18 @@ void loop() {
   }
 
   if (CODE == codeping.omhoog && (BUSY == 0 || BUSY == 1)) { //kan alleen aan als er niets andes aanstaat en z'n code wordt verzonden
-    digitalWrite(UP, HIGH);
+    digitalWrite(UP, LOW);
     digitalWrite(UPLED, HIGH);
-    digitalWrite(DOWN, LOW);
+    digitalWrite(DOWN, HIGH);
     RECIVETIME = millis();
     RECIVE = millis();
     BUSY = 1;
     CODE = 1;
   }
   else if (CODE == codeping.omlaag && (BUSY == 0 || BUSY == 2)) {//kan alleen aan als er niets andes aanstaat en z'n code wordt verzonden
-    digitalWrite(DOWN, HIGH);
+    digitalWrite(DOWN, LOW);
     digitalWrite(DOWNLED, HIGH);
-    digitalWrite(UP, LOW);
+    digitalWrite(UP, HIGH);
     RECIVETIME = millis();
     RECIVE = millis();
     BUSY = 2;
@@ -112,19 +114,6 @@ void loop() {
   }
 
   if (CHECKTIME) {
-    if (BUSY != 0 && (millis() - RECIVETIME) >= 300) { //elke halve seconde wordt alles uitgezet als er ondertussen niet is ontvangen.
-      done();
-      Serial.print("done");
-    }
-
-    /* if ((millis() - RECIVE) >= 60000) {
-       verbonden = false;
-      }*/
-
-    CHECKTIME = false;
-    Serial.print("RECIVETIME: ");
-    Serial.println(RECIVETIME);
-    Serial.print("millis: ");
-    Serial.println(millis());
+    checktime();
   }
 }

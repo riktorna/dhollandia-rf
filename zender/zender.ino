@@ -43,11 +43,13 @@ const static uint8_t PIN_RADIO_CSN = 10;
 */
 
 NRFLite _radio;
-U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ 8, /* data=*/ 7, /* reset=*/ 2);
-
+U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ 8, /* data=*/ 7, /* reset=*/ U8X8_PIN_NONE);
 void setup() {
   Serial.begin(9600);
   u8g2.begin();
+  u8g2.setFont(u8g2_font_6x13_tf);
+  u8g2.setFontMode(1);
+  u8g2.setDrawColor(2);
   pinMode(UP, INPUT_PULLUP);
   pinMode(DOWN, INPUT_PULLUP);
   pinMode(LATCH, INPUT_PULLUP);
@@ -67,18 +69,20 @@ void setup() {
 void loop() {
 
   /*if (fails >= 10) {
-
-      drawscreen(9);
+    drawscreen(9);
        sendcode();
+
       if ((millis() - lost) >= 60000) {
         zoekontvanger(125);
       }
     } else */if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
     if (modus == true) {
       CODE = codeping.omhoog;
+      sendcode();
       drawscreen(5);
     } else {
       CODE = codeping.omhoog_k;
+      sendcode();
       drawscreen(7);
     }
     sendcode();
@@ -86,9 +90,11 @@ void loop() {
   } else if (!digitalRead(DOWN)) {//als er op de rode knop wordt gedrukt, ga dan omlaag (kantelen)
     if (modus == true) {
       CODE = codeping.omlaag;
+      sendcode();
       drawscreen(6);
     } else {
       CODE = codeping.omlaag_k;
+      sendcode();
       drawscreen(8);
     }
     sendcode();
