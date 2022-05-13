@@ -2,15 +2,15 @@ void sendcode() {
   if (_radio.send(DESTINATION_RADIO_ID, &CODE, sizeof(CODE))) // 'send' puts the radio into Tx mode and sends the code
   {
     Serial.println("...Success");
-    /* if (fails > 0) {
+    if (fails > 0) {
        fails = fails--;
-      }*/
+      }
   }
   else
   {
     Serial.println("...Failed");
-    /* fails = fails++;
-      lost = millis();*/
+     fails = fails++;
+      lost = millis();
   }
   Serial.println(CODE);
 }

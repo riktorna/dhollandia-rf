@@ -7,6 +7,10 @@
 #define DOWN 6
 #define LATCH 2
 #define BEEP 3
+#define RADIO_ID  1
+#define DESTINATION_RADIO_ID  0
+#define PIN_RADIO_CE  9
+#define PIN_RADIO_CSN  10
 
 int CODE = 000;
 
@@ -26,11 +30,6 @@ bool verbonden = false;
 bool voertuig;
 bool modus;
 
-const static uint8_t RADIO_ID = 1;
-const static uint8_t DESTINATION_RADIO_ID = 0;
-
-const static uint8_t PIN_RADIO_CE = 9;
-const static uint8_t PIN_RADIO_CSN = 10;
 /*Radio    Arduino
   CE    -> 9
   CSN   -> 10 (Hardware SPI SS)
@@ -44,6 +43,7 @@ const static uint8_t PIN_RADIO_CSN = 10;
 
 NRFLite _radio;
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ 8, /* data=*/ 7, /* reset=*/ U8X8_PIN_NONE);
+
 void setup() {
   Serial.begin(9600);
   u8g2.begin();
@@ -68,14 +68,16 @@ void setup() {
 
 void loop() {
 
-  /*if (fails >= 10) {
+  /*if (fails >= 100) {
     drawscreen(9);
        sendcode();
 
       if ((millis() - lost) >= 60000) {
         zoekontvanger(125);
       }
-    } else */if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
+    } */
+    
+    if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
     if (modus == true) {
       CODE = codeping.omhoog;
       sendcode();

@@ -3,8 +3,9 @@ extern const char startup_bits[];
 extern const char QR_bits[];
 
 void drawscreen(byte scherm) {
-  u8g2.firstPage();
-  do {
+  //u8g2.firstPage();
+  u8g2.clearBuffer();
+  //do {
     switch (scherm) {
       case 1:
         u8g2.drawXBMP( 0, 0, 128, 64, startup_bits);
@@ -176,5 +177,6 @@ void drawscreen(byte scherm) {
         u8g2.drawStr(17, 45, "tot automatisch");
         u8g2.drawStr(25, 60, "herverbinden");
     }
-  } while ( u8g2.nextPage() );
+    u8g2.sendBuffer();
+ // } while ( u8g2.nextPage() );
 }
