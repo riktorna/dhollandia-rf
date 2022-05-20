@@ -8,7 +8,7 @@
     }
 
 void checktime(){
-  if (BUSY != 0 && (millis() - RECIVETIME) > 520) { //elke halve seconde wordt alles uitgezet als er ondertussen niet is ontvangen.
+  if (BUSY != 0 && (millis() - RECIVETIME) > 600) { //elke halve seconde wordt alles uitgezet als er ondertussen niet is ontvangen.
       done();
       Serial.print("done");
     }
