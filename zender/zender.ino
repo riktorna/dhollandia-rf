@@ -12,8 +12,6 @@
 #define PIN_RADIO_CE  9
 #define PIN_RADIO_CSN  10
 
-int CODE = 000;
-
 struct zendblok1
 {
   bool zoekzender;
@@ -24,7 +22,9 @@ struct zendblok1
 };
 
 zendblok1 codeping;
+int CODE = 000;
 byte fails = 0;
+byte screentodraw;
 long lost;
 bool verbonden = false;
 bool voertuig;
@@ -61,43 +61,46 @@ void setup() {
   do {                 // teken het handleidingsscherm
     drawscreen(2);
   } while (digitalRead(UP));
+  
+  delay(300);
+  
+  do {                 // teken het keuzescherm
+    drawscreen(3);
+  } while (digitalRead(UP) /*|| digitalRead(DOWN)*/);
 
   zoekontvanger(125);
   beep();
 }
 
 void loop() {
-
-  /*if (fails >= 100) {
+  if (fails >= 100) {
     drawscreen(9);
-       sendcode();
+    sendcode();
 
-      if ((millis() - lost) >= 60000) {
-        zoekontvanger(125);
-      }
-    } */
-    
-    if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
+    if ((millis() - lost) >= 60000) {
+      zoekontvanger(125);
+    }
+  }
+
+  if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
     if (modus == true) {
       CODE = codeping.omhoog;
       sendcode();
-      drawscreen(5);
+      screentodraw = 5;
     } else {
       CODE = codeping.omhoog_k;
       sendcode();
-      drawscreen(7);
+      screentodraw = 7;
     }
     sendcode();
 
   } else if (!digitalRead(DOWN)) {//als er op de rode knop wordt gedrukt, ga dan omlaag (kantelen)
     if (modus == true) {
       CODE = codeping.omlaag;
-      sendcode();
-      drawscreen(6);
+      screentodraw = 6;
     } else {
       CODE = codeping.omlaag_k;
-      sendcode();
-      drawscreen(8);
+      screentodraw = 8;
     }
     sendcode();
 
@@ -105,8 +108,8 @@ void loop() {
     modus = digitalRead(LATCH);   // zet dan de modus goed
     CODE = 000;                   // en stuur een lege code zodat de ontvanger weet dat je er nog bent
     sendcode();
-    drawscreen(4);
+    screentodraw = 4;
   }
-  delay(50);
-  Serial.println(CODE);
+  drawscreen(screentodraw);
+  //Serial.println(CODE);
 }
