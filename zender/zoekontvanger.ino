@@ -6,19 +6,22 @@ void zoekontvanger(byte voertuig) {
     while (1); // Wait here forever.
   }
   Serial.println(F("start met zoeken"));
-  
+
+  beep();
+
   do {                                // luister of er iemand ping's uitzend
     while (_radio.hasData()) {
       _radio.readData(&codeping);
     }
-   Serial.println(F("zoeken"));
-   
+    Serial.println(F("zoeken"));
+
     if (codeping.zoekzender == true) {
       _radio.send(DESTINATION_RADIO_ID, &codeping, sizeof(codeping)); //stuur de ping terug om normale operatie te starten
 
-      verbonden = true;  
+      verbonden = true;
       Serial.println(F("gevonden"));
     }
     delay(50);
   } while (!verbonden);
+  fails = 1;
 }

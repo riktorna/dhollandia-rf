@@ -1,6 +1,8 @@
     void done() {         //alles uit
       digitalWrite(UP, HIGH);
       digitalWrite(DOWN, HIGH);
+      digitalWrite(KUP, HIGH);
+      digitalWrite(KDOWN, HIGH);
       digitalWrite(UPLED, LOW);
       digitalWrite(DOWNLED, LOW);
       CODE = 000;
@@ -13,9 +15,9 @@ void checktime(){
       Serial.print("done");
     }
 
-    /* if ((millis() - RECIVE) >= 60000) {
+    if ((millis() - RECIVE) >= 60000) {
        verbonden = false;
-      }*/
+      }
 
     CHECKTIME = false;
     digitalWrite(ERRLED, HIGH);    // geef de status door aan de seriele poort en laat het lampje knipperen zodat je weet dat het aanstaat.

@@ -31,13 +31,13 @@ void drawscreen(byte scherm) {
 
     case 4:
       u8g2.drawXBMP( 0, 0, 128, 64, home_bits);
-      if (voertuig == true) {
+      if (voertuig == false) {
         u8g2.drawStr(8, 28, "Vrachtwagen");
       } else {
         u8g2.drawStr(8, 28, "Bus");
       }
       if (modus == true) {
-        u8g2.drawStr(8, 64, "Omhoog/Omlaag");
+        u8g2.drawStr(8, 62, "Omhoog/Omlaag");
       } else {
         u8g2.drawStr(8, 62, "Kantelen");
       }
@@ -45,7 +45,7 @@ void drawscreen(byte scherm) {
 
     case 5: //omhoog
       u8g2.drawStr(1, 10, "Omhoog");
-      if (voertuig == true) {
+      if (voertuig == false) {
         u8g2.drawStr(1, 20, "Vrachtwagen");
       } else {
         u8g2.drawStr(1, 20, "Bus");
@@ -68,7 +68,7 @@ void drawscreen(byte scherm) {
 
     case 6: //omlaag
       u8g2.drawStr(1, 10, "Omlaag");
-      if (voertuig == true) {
+      if (voertuig == false) {
         u8g2.drawStr(1, 20, "Vrachtwagen");
       } else {
         u8g2.drawStr(1, 20, "Bus");
@@ -91,7 +91,7 @@ void drawscreen(byte scherm) {
 
     case 7: //omhoog_k
       u8g2.drawStr(1, 10, "Omhoog kantelen");
-      if (voertuig == true) {
+      if (voertuig == false) {
         u8g2.drawStr(1, 20, "Vrachtwagen");
       } else {
         u8g2.drawStr(1, 20, "Bus");
@@ -114,7 +114,7 @@ void drawscreen(byte scherm) {
 
     case 8: //omlaag_k
       u8g2.drawStr(1, 10, "Omlaag kantelen");
-      if (voertuig == true) {
+      if (voertuig == false) {
         u8g2.drawStr(1, 20, "Vrachtwagen");
       } else {
         u8g2.drawStr(1, 20, "Bus");

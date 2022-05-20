@@ -29,6 +29,7 @@ long lost;
 bool verbonden = false;
 bool voertuig;
 bool modus;
+byte keuze = 0;
 
 /*Radio    Arduino
   CE    -> 9
@@ -50,6 +51,7 @@ void setup() {
   u8g2.setFont(u8g2_font_6x13_tf);
   u8g2.setFontMode(1);
   u8g2.setDrawColor(2);
+  u8g2.setBitmapMode(1);
   pinMode(UP, INPUT_PULLUP);
   pinMode(DOWN, INPUT_PULLUP);
   pinMode(LATCH, INPUT_PULLUP);
@@ -61,28 +63,35 @@ void setup() {
   do {                 // teken het handleidingsscherm
     drawscreen(2);
   } while (digitalRead(UP));
-  
-  delay(300);
-  
-  do {                 // teken het keuzescherm
-    drawscreen(3);
-  } while (digitalRead(UP) /*|| digitalRead(DOWN)*/);
 
-  zoekontvanger(125);
+  drawscreen(3);
+  delay(2000);
+
+  while (keuze == 0) {               // teken het keuzescherm
+    if (!digitalRead(DOWN)) {
+      keuze = 123;
+    } else if (!digitalRead(UP)) {
+      keuze = 125;
+    }
+  }
+  zoekontvanger(keuze);
   beep();
 }
 
 void loop() {
-  if (fails >= 100) {
-    drawscreen(9);
+  if (fails >= 10) {
+    screentodraw = 9;
     sendcode();
 
-    if ((millis() - lost) >= 60000) {
-      zoekontvanger(125);
+    if (fails <= 15) {
+      lost = millis();
     }
-  }
 
-  if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
+    if ((millis() - lost) >= 58000) {
+      verbonden = false;
+      zoekontvanger(keuze);
+    }
+  } else if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
     if (modus == true) {
       CODE = codeping.omhoog;
       sendcode();
@@ -110,6 +119,8 @@ void loop() {
     sendcode();
     screentodraw = 4;
   }
+  sendcode();
   drawscreen(screentodraw);
+  sendcode();
   //Serial.println(CODE);
 }

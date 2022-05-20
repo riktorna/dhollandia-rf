@@ -3,6 +3,8 @@
 
 #define UP 7
 #define DOWN 6
+#define KUP 4
+#define KDOWN 5
 #define UPLED A1
 #define DOWNLED A2
 #define ERRLED A0
@@ -47,8 +49,16 @@ void setup() {
   Serial.begin(9600);
   pinMode(UP, OUTPUT);
   digitalWrite(UP, HIGH);
+
+  pinMode(KUP, OUTPUT);
+  digitalWrite(KUP, HIGH);
+
   pinMode(DOWN, OUTPUT);
   digitalWrite(DOWN, HIGH);
+
+  pinMode(KDOWN, OUTPUT);
+  digitalWrite(KDOWN, HIGH);
+
   pinMode(UPLED, OUTPUT);
   pinMode(DOWNLED, OUTPUT);
   pinMode(ERRLED, OUTPUT);
@@ -92,21 +102,39 @@ void loop() {
   }
 
   if (CODE == codeping.omhoog && (BUSY == 0 || BUSY == 1)) { //kan alleen aan als er niets andes aanstaat en z'n code wordt verzonden
+    done();
     digitalWrite(UP, LOW);
     digitalWrite(UPLED, HIGH);
-    digitalWrite(DOWN, HIGH);
     RECIVETIME = millis();
     RECIVE = millis();
     BUSY = 1;
     CODE = 1;
   }
   else if (CODE == codeping.omlaag && (BUSY == 0 || BUSY == 2)) {//kan alleen aan als er niets andes aanstaat en z'n code wordt verzonden
+    done();
     digitalWrite(DOWN, LOW);
     digitalWrite(DOWNLED, HIGH);
-    digitalWrite(UP, HIGH);
     RECIVETIME = millis();
     RECIVE = millis();
     BUSY = 2;
+    CODE = 1;
+  }
+  else if (CODE == codeping.omhoog_k && (BUSY == 0 || BUSY == 3)) {//kan alleen aan als er niets andes aanstaat en z'n code wordt verzonden
+    done();
+    digitalWrite(KUP, LOW);
+    digitalWrite(UPLED, HIGH);
+    RECIVETIME = millis();
+    RECIVE = millis();
+    BUSY = 3;
+    CODE = 1;
+  }
+  else if (CODE == codeping.omlaag_k && (BUSY == 0 || BUSY == 4)) {//kan alleen aan als er niets andes aanstaat en z'n code wordt verzonden
+    done();
+    digitalWrite(KDOWN, LOW);
+    digitalWrite(DOWNLED, HIGH);
+    RECIVETIME = millis();
+    RECIVE = millis();
+    BUSY = 4;
     CODE = 1;
   } else if (CODE == 000) {
     RECIVE = millis();

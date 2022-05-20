@@ -2,17 +2,14 @@ void sendcode() {
   if (_radio.send(DESTINATION_RADIO_ID, &CODE, sizeof(CODE))) // 'send' puts the radio into Tx mode and sends the code
   {
     Serial.println(F("...Success"));
-    /*if (fails > 0) {
-       fails = fails--;
-      }*/
-  }
-  else
-  {
+    if (fails > 0) {
+      fails = fails--;
+    }
+  } else {
     Serial.println(F("...Failed"));
-    /* fails = fails++;
-      lost = millis();*/
+    fails = fails + 1;
   }
-  //Serial.println(CODE);
+  Serial.println(fails);
 }
 
 void beep() {     // laat de buzzer horen zonder timer te gebruiken
