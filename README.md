@@ -1,8 +1,5 @@
 # dhollandia-rf
 DIY zender en ontvanger om een laadklep via en draadloze zender te bedienen.
-
-[TOCM]
-
 # Gebruikshandleiding
 In deze handleiding wordt het gebruik, onderhoud en de installatie van de zender/ontvanger besproken.
 ## Gebruik van ontvanger
@@ -26,7 +23,15 @@ Om de zender aan te kunnen zetten moet de powerbank *volledig* in de houder zitt
 
 1. Daarna zal de zender een QR-code laten zien om bij deze handleiding te komen. Druk op de groene knop om door te gaan.
 
-1. In dit scherm kan gekozen worden met welk voertuig de zender moet verbinden. druk op de groene knop voor de vrachtwagen. druk op de rode knop voor de bus/kleine vrachtwagen.
-Direct na het indrukken van een van de knoppen zal de zender een toon maken, dit geeft aan dat de zender is begonnen met verbinden. Wanneer de zender het gekozen voertuig heeft gevonden zal het nog een toon maken. Als alle dus goed gaat klinkt dit als twee tonen die elkaar opvolgen. 
+1. In dit scherm kan gekozen worden met welk voertuig de zender moet verbinden. Druk op de groene knop voor de vrachtwagen. druk op de rode knop voor de bus/kleine vrachtwagen.
+Direct na het indrukken van een van de knoppen zal de zender een toon maken, dit geeft aan dat de zender is begonnen met verbinden. Wanneer de zender het gekozen voertuig heeft gevonden zal het nog een toon maken. Als alles goed gaat klinkt dit als twee tonen die elkaar opvolgen.
 
-1. 
+1. Nu zit je in het hoofdscherm, hierin kan je zien met wat je verbonden bent en de zendermodus. De zendermodus is wat de laadklep doet als de goene of rode knop wordt ingedrukt. de modi zijn:
+
+- Omhoog/omlaag
+*Als het witte gedeelte van de middelste knop boven de zwarte rand uitsteek staat de zender in omhoog/omlaag-modus.* Deze modus is precies het zelfde als de bedrade afstandsbediening. Dat betekend dat de knoppen ingedrukt moeten blijven. Door de groene knop in te drukken zal de laadklep omhoog komen. Door de rode knop in te drukken zal de laadklep zakken.
+
+- Kantelen
+*Als het witte gedeelte van de middelste knop gelijk is met de zwarte rand staat de zender in kantelen-modus.* Deze modus is precies het zelfde als de joystick onder de klep. Dat betekend dat de knoppen ingedrukt moeten blijven. Door de groene knop in te drukken zal de laadklep omhoog kantelen. Door de rode knop in te drukken zal de laadklep omlaak kantelen.
+
+***PAS OP***, controlleer altijd of de zender in de goede modus staat *voor* het laden van de klep. wanneer er van modus wordt gewisseld zal de toon weer afspelen. Als je plotseling een toon hoort klinken is het zaak om te controleren of de zender nog in de goede modus staat.
