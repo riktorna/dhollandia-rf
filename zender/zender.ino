@@ -31,17 +31,6 @@ bool voertuig;
 bool modus;
 byte keuze = 0;
 
-/*Radio    Arduino
-  CE    -> 9
-  CSN   -> 10 (Hardware SPI SS)
-  MOSI  -> 11 (Hardware SPI MOSI)
-  MISO  -> 12 (Hardware SPI MISO)
-  SCK   -> 13 (Hardware SPI SCK)
-  IRQ   -> No connection
-  VCC   -> No more than 3.6 volts
-  GND   -> GND
-*/
-
 NRFLite _radio;
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ 8, /* data=*/ 7, /* reset=*/ U8X8_PIN_NONE);
 
@@ -65,7 +54,7 @@ void setup() {
   } while (digitalRead(UP));
 
   drawscreen(3);
-  delay(2000);
+  delay(500);
 
   while (keuze == 0) {               // teken het keuzescherm
     if (!digitalRead(DOWN)) {
@@ -79,16 +68,19 @@ void setup() {
 }
 
 void loop() {
-  if (fails >= 10) {
+  if (fails >= 9) {
     screentodraw = 9;
     sendcode();
+    CODE = 000;
 
-    if (fails <= 15) {
+    if (fails < 12) {
       lost = millis();
+      beep();
     }
 
     if ((millis() - lost) >= 58000) {
       verbonden = false;
+      fails = 1;
       zoekontvanger(keuze);
     }
   } else if (!digitalRead(UP)) { //als er op de groene knop wordt gedrukt, ga dan omhoog (kantelen)
@@ -114,7 +106,10 @@ void loop() {
     sendcode();
 
   } else {                        // als er niets gebeurd;
-    modus = digitalRead(LATCH);   // zet dan de modus goed
+    if(modus != digitalRead(LATCH)){ // zet dan de modus goed
+     modus =  digitalRead(LATCH);
+     beep();                         // beep als de modus wisselt
+    }
     CODE = 000;                   // en stuur een lege code zodat de ontvanger weet dat je er nog bent
     sendcode();
     screentodraw = 4;

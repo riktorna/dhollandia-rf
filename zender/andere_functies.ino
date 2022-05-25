@@ -3,7 +3,7 @@ void sendcode() {
   {
     Serial.println(F("...Success"));
     if (fails > 0) {
-      fails = fails--;
+      fails = fails - 1;
     }
   } else {
     Serial.println(F("...Failed"));

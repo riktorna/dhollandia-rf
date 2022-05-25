@@ -9,6 +9,8 @@
 #define DOWNLED A2
 #define ERRLED A0
 #define VOERTUIG 125
+#define PIN_RADIO_CE  9
+#define PIN_RADIO_CSN  10
 
 const static int RADIO_ID = 0;
 const static int DESTINATION_RADIO_ID = 1;
@@ -30,19 +32,6 @@ long RECIVETIME = 0;
 long RECIVE = 0;
 int CODE = 0;
 
-const static uint8_t PIN_RADIO_CE = 9;
-const static uint8_t PIN_RADIO_CSN = 10;
-/*Radio    Arduino
-  CE    -> 9
-  CSN   -> 10 (Hardware SPI SS)
-  MOSI  -> 11 (Hardware SPI MOSI)
-  MISO  -> 12 (Hardware SPI MISO)
-  SCK   -> 13 (Hardware SPI SCK)
-  IRQ   -> No connection
-  VCC   -> No more than 3.6 volts
-  GND   -> GND
-*/
-
 NRFLite _radio;
 
 void setup() {
@@ -62,20 +51,8 @@ void setup() {
   pinMode(UPLED, OUTPUT);
   pinMode(DOWNLED, OUTPUT);
   pinMode(ERRLED, OUTPUT);
-  cli();                      //stop interrupts for till we make the settings
-  /*1. First we reset the control register to amke sure we start with everything disabled.*/
-  TCCR1A = 0;                 // Reset entire TCCR1A to 0
-  TCCR1B = 0;                 // Reset entire TCCR1B to 0
 
-  /*2. We set the prescalar to the desired value by changing the CS10 CS12 and CS12 bits. */
-  TCCR1B |= B00000100;
-
-  /*3. We enable compare match mode on register A*/
-  TIMSK1 |= B00000010;        //Set OCIE1A to 1 so we enable compare match A
-
-  /*4. Set the value of register A to 31250*/
-  OCR1A = 35000;             //Finally we set compare register A to this value
-  sei();                     //Enable back the interrupts
+  setinterrupt();
 
   if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN, NRFLite::BITRATE250KBPS, 125))
   {
@@ -94,7 +71,7 @@ ISR(TIMER1_COMPA_vect) {
 void loop() {
   if (!verbonden) {
     digitalWrite(ERRLED, HIGH); // als de vebinding is verloren gaar de gele led aan en probert hij te herverbinden
-    /* vindconectie();*/
+    vindconectie();
   }
 
   while (_radio.hasData()) {
